@@ -21,7 +21,8 @@ import pygame
 
 #%% Ön Tanımlar
 my_time = ""
-current_time =""
+current_time = ""
+run = ""
 #%%# Başlık ve Etiketler
 fontStyle = ("cooper", 17, "bold")
 little_fontStyle = ("cooper", 10, "bold")
@@ -78,9 +79,11 @@ def UpDownSet():
 
     selected_one = select_one.get()
     if selected_one == "UP":
-        situation = Go_UP
+        situation = "UP"
     elif selected_one == "DOWN":
-        situation = Go_DOWN
+        situation = "DOWN"
+        
+    print(situation)
 #%% Hour
 label_hour = tk.Label(text='Hour: ', font= little_fontStyle, fg="black", bg="gray80")
 label_hour.place(x = 10, y = 300)
@@ -155,7 +158,14 @@ setButton.config(font=buttonStyle)
 setButton.place(x=10, y=370)
 #%% Start Butonu
 def Start():
-    countdown(int(my_time))
+    global run
+    run = True
+    if situation == "DOWN": 
+        
+        countdown(int(my_time))
+    if situation == "UP":
+        
+        countup(int(my_time))
     
 startButton = tk.Button(window, width=18, height=2, text='Start', fg='green', command = Start)
 startButton.pack(ipadx=5, ipady=1)  # buton paketle butonları sağ ortaya al buton çevre ölçüleri
@@ -163,7 +173,11 @@ startButton.config(font=buttonStyle)
 startButton.place(x=10, y=430)
 #%% Stop Butonu
 def Stop():
-    pass
+    global run
+    run = False
+    print("Stopa Basıldı")
+    window.update()
+    
     
 stopButton = tk.Button(window, width=18, height=2, text='Stop', fg='red', command = Stop)
 stopButton.pack(ipadx=5, ipady=1)  # buton paketle butonları sağ ortaya al buton çevre ölçüleri
@@ -171,8 +185,8 @@ stopButton.config(font=buttonStyle)
 stopButton.place(x=200, y=430)
 #%% Reset Butonu
 def Reset():
-    pass
-    
+    global my_timer
+    my_timer = 0
 resetButton = tk.Button(window, width=18, height=2, text='Reset', fg='blue', command = Reset)
 resetButton.pack(ipadx=5, ipady=1)  # buton paketle butonları sağ ortaya al buton çevre ölçüleri
 resetButton.config(font=buttonStyle)
@@ -198,32 +212,52 @@ clock_label.place(x = 410, y = 10)
 clock()
 
 #%% PROGRAMMING FOR UP AND DOWN COUNTER
-Go_UP = ""
-Go_DOWN = ""
 
-def countdown(my_time): 
-    start_time = time.time()
-    
-    while my_time:   
-        global my_timer
-        
-        mins, secs = divmod(my_time, 60) 
-        hours, mins = divmod(mins, 60)
-        timer = '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)        
-        # print(timer, end="\n" )
-        time_before_sleep = time.time() - start_time
-        time.sleep(1) 
-        time_after_sleep = time.time() - start_time
-        # print(timer, time_before_sleep, time_after_sleep)
-        my_time -= 1
-        my_timer = timer
-        label_time.config(text = str(my_timer))
-      
-        window.update()
-    print('TIME IS OVER')
-    pygame.init()
-    pygame.mixer.music.load("onepiece.mp3")
-    pygame.mixer.music.play(-1)
-    
 
+def countdown(my_time):  
+    
+    if run == True:
+        while my_time:        
+            global my_timer            
+            mins, secs = divmod(my_time, 60) 
+            hours, mins = divmod(mins, 60)
+            timer = '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)        
+            my_time -= 1
+            time.sleep(1)                         
+            my_timer = timer
+            label_time.config(text = str(my_timer))
+            if  run == False:
+                break         
+            window.update()
+            
+        if my_time == 0:
+            print('TIME IS OVER')
+            pygame.init()
+            pygame.mixer.music.load("onepiece.mp3")
+            pygame.mixer.music.play(-1)
+    
+def countup(my_time):        
+    k = 0
+    if run == True:
+        while my_time:                   
+            global my_timer
+            mins, secs = divmod(k, 60) 
+            hours, mins = divmod(mins, 60)
+            timer = '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
+            k +=1
+            time.sleep(1)
+            my_timer = timer
+            label_time.config(text = str(my_timer))
+            print(timer, end="\n")
+            if  my_time == k or run == False:
+                break
+            window.update()
+    
+        if run == True:
+            print('TIME IS OVER')
+            pygame.init()
+            pygame.mixer.music.load("onepiece.mp3")
+            pygame.mixer.music.play(-1)
+
+window.update()    
 window.mainloop()
