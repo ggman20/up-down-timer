@@ -39,7 +39,6 @@ window.title("COUNTING")  # form etiketi
 baslik = tk.Label(text="COUNTING", fg="green", bg="gray80")
 baslik.config(font="Bold 40")
 baslik.pack()
-
 #%% Logo ve ICO
 im = PIL.Image.open("littlelion.png")
 pht = PIL.ImageTk.PhotoImage(im)
@@ -62,7 +61,6 @@ closeButton.place(x=420, y=400)
 
 window.protocol("WM_DELETE_WINDOW", Close)
 #%% UP or DOWN Seçimi
-
 choose_label = tk.Label(text="UP or DOWN :",font= little_fontStyle, fg="black", bg="gray80")
 choose_label.place(x = 10, y = 260)
 
@@ -73,16 +71,13 @@ select_one.current(0)
 
 
 #%%### Up Or Down ####
-
 def UpDownSet():
     global situation
-
     selected_one = select_one.get()
     if selected_one == "UP":
         situation = "UP"
     elif selected_one == "DOWN":
-        situation = "DOWN"
-        
+        situation = "DOWN"        
     print(situation)
 #%% Hour
 label_hour = tk.Label(text='Hour: ', font= little_fontStyle, fg="black", bg="gray80")
@@ -95,22 +90,15 @@ label_entry_hour.place(x = 110,y = 300, height = 20) # Entry yükseklik ayarı b
 this_hour = ""
 
 def EnterHour():
-
-    global this_hour
-    
-    this_hour = label_entry_hour.get()
-    
-    
+    global this_hour    
+    this_hour = label_entry_hour.get()        
     try:
         this_hour = int(this_hour)
-        print("Hour: ",this_hour)
-        
+        print("Hour: ",this_hour)        
     except:
         this_hour = ""
-        messagebox.showinfo(title = "Warning!", message = "Please enter information for hour as numbers only.")
-        
+        messagebox.showinfo(title = "Warning!", message = "Please enter information for hour as numbers only.")        
 #%%Minute
-
 label_minute = tk.Label(text='Minute:', font= little_fontStyle, fg="black", bg="gray80")
 label_minute.place(x = 10, y = 340)
 
@@ -138,13 +126,11 @@ def EnterMinute():
     except:
         this_minute = ""
         messagebox.showinfo(title = "Uyarı!", message = "Please enter information for minute as numbers only.")
-#%%SaveTime
-    
+#%%SaveTime    
 def SaveTime():
     global my_time
     my_time = ((this_hour)*3600) + ((this_minute)*60)
-    print("SaveTime:", my_time)    
-    
+    print("SaveTime:", my_time)        
 #%%                       #### Birden çok fonksiyonu aynı anda çalıştırma ####
 def combine_func(*funcs):
     def combined_func(*args,**kwargs):
@@ -160,6 +146,7 @@ setButton.place(x=10, y=370)
 def Start():
     global run
     run = True
+    print(my_timer)
     if situation == "DOWN": 
         
         countdown(int(my_time))
@@ -174,10 +161,10 @@ startButton.place(x=10, y=430)
 #%% Stop Butonu
 def Stop():
     global run
-    run = False
+    run = False    
     print("Stopa Basıldı")
-    window.update()
-    
+    print(my_timer)
+    window.update()  
     
 stopButton = tk.Button(window, width=18, height=2, text='Stop', fg='red', command = Stop)
 stopButton.pack(ipadx=5, ipady=1)  # buton paketle butonları sağ ortaya al buton çevre ölçüleri
@@ -187,6 +174,7 @@ stopButton.place(x=200, y=430)
 def Reset():
     global my_timer
     my_timer = 0
+    print(my_timer)
 resetButton = tk.Button(window, width=18, height=2, text='Reset', fg='blue', command = Reset)
 resetButton.pack(ipadx=5, ipady=1)  # buton paketle butonları sağ ortaya al buton çevre ölçüleri
 resetButton.config(font=buttonStyle)
@@ -197,25 +185,17 @@ label_time = tk.Label(text = "" , fg="red", bg="gray80")
 label_time.config(font="Bold 30")
 label_time.place(x = 250, y = 290)
 #%%TIME
-
 def clock():
     clock_hour = time.strftime('%H')
     clock_minute = time.strftime('%M')
     clock_second = time.strftime('%S')
     clock_label.config(text = clock_hour + ":" + clock_minute + ":" + clock_second)
     clock_label.after(1000, clock)
-
 clock_label = tk.Label(window, text = "", font= ("Helvetica", 15), bg = "gray80", fg = "black")
 clock_label.place(x = 410, y = 10)
-
-
 clock()
-
 #%% PROGRAMMING FOR UP AND DOWN COUNTER
-
-
-def countdown(my_time):  
-    
+def countdown(my_time):      
     if run == True:
         while my_time:        
             global my_timer            
