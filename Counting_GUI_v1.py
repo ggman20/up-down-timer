@@ -12,13 +12,10 @@ from tkinter import *
 from PIL import Image, ImageTk
 import PIL.ImageTk
 
-
 import time
 import datetime
 import winsound
 import pygame
-
-
 #%% Ön Tanımlar
 # my_time = ""
 # current_time = ""
@@ -68,7 +65,6 @@ select_one = ttk.Combobox(window, textvariable=StringVar(), width = 9, font=litt
 select_one["values"] = ["UP", "DOWN"]
 select_one.place(x = 110, y = 260)
 select_one.current(0)
-
 #%%### Up Or Down ####
 def UpDownSet():
     global situation
