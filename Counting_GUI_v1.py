@@ -20,9 +20,9 @@ import pygame
 
 
 #%% Ön Tanımlar
-my_time = ""
-current_time = ""
-run = ""
+# my_time = ""
+# current_time = ""
+# run = ""
 #%%# Başlık ve Etiketler
 fontStyle = ("cooper", 17, "bold")
 little_fontStyle = ("cooper", 10, "bold")
@@ -69,7 +69,6 @@ select_one["values"] = ["UP", "DOWN"]
 select_one.place(x = 110, y = 260)
 select_one.current(0)
 
-
 #%%### Up Or Down ####
 def UpDownSet():
     global situation
@@ -111,16 +110,12 @@ this_minute = ""
 def EnterMinute():
 
     global this_minute
-    
-    
-    
+            
     this_minute = label_entry_minute.get()
     
     try:
         
-        this_minute = float(this_minute)
-        
-
+        this_minute = float(this_minute)    
         print("Minute: ",this_minute)
         
     except:
@@ -130,7 +125,8 @@ def EnterMinute():
 def SaveTime():
     global my_time
     my_time = ((this_hour)*3600) + ((this_minute)*60)
-    print("SaveTime:", my_time)        
+    print("SaveTime:", my_time)  
+    label_savetime.config(text = str(my_time))      
 #%%                       #### Birden çok fonksiyonu aynı anda çalıştırma ####
 def combine_func(*funcs):
     def combined_func(*args,**kwargs):
@@ -146,7 +142,7 @@ setButton.place(x=10, y=370)
 def Start():
     global run
     run = True
-    print(my_timer)
+    print("Start", my_timer)
     if situation == "DOWN": 
         
         countdown(int(my_time))
@@ -184,6 +180,13 @@ my_timer = ""
 label_time = tk.Label(text = "" , fg="red", bg="gray80")
 label_time.config(font="Bold 30")
 label_time.place(x = 250, y = 290)
+#%%SET_TIME
+label_save = tk.Label(text='SET TIME', font= ("cooper", 15, "bold"), fg="blue", bg="gray80")
+label_save.place(x = 30, y = 100)
+label_savetime = tk.Label(text = "" , fg="red", bg="gray80")
+label_savetime.config(font="Bold 30")
+label_savetime.place(x = 25, y = 150)
+label_savetime.config(text = str(my_time))
 #%%TIME
 def clock():
     clock_hour = time.strftime('%H')
@@ -198,7 +201,8 @@ clock()
 def countdown(my_time):      
     if run == True:
         while my_time:        
-            global my_timer            
+            global my_timer 
+            print("Mytime", my_time)
             mins, secs = divmod(my_time, 60) 
             hours, mins = divmod(mins, 60)
             timer = '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)        
@@ -221,6 +225,7 @@ def countup(my_time):
     if run == True:
         while my_time:                   
             global my_timer
+            print("Mytime", my_time)
             mins, secs = divmod(k, 60) 
             hours, mins = divmod(mins, 60)
             timer = '{:02d}:{:02d}:{:02d}'.format(hours, mins, secs)
