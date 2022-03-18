@@ -16,10 +16,10 @@ import time
 import datetime
 import winsound
 import pygame
-#%% Ön Tanımlar
-# my_time = ""
-# current_time = ""
-# run = ""
+# %% Ön Tanımlar
+my_time = ""
+current_time = ""
+run = ""
 #%%# Başlık ve Etiketler
 fontStyle = ("cooper", 17, "bold")
 little_fontStyle = ("cooper", 10, "bold")
